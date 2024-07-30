@@ -7,3 +7,11 @@ module "resource_group" {
     purpose   = "testing"
   }
 }
+
+module "virtual_network" {
+  source               = "github.com/D3jag0re/tf-modules-azure//virtualNetwork"
+  vnet_name            = "movie-vnet"
+  vnet_location        = local.location
+  rg_name              = module.resource_group.rg_name
+  vnet_addressprefixes = local.vnet_addressprefixes
+}
