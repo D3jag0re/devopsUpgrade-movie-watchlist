@@ -15,3 +15,18 @@ module "virtual_network" {
   rg_name              = module.resource_group.rg_name
   vnet_addressprefixes = local.vnet_addressprefixes
 }
+
+module "subnet" {
+  source                 = "github.com/D3jag0re/tf-modules-azure//subnet"
+  subnet_name            = "subnetA"
+  subnet_addressprefixes = local.subnet_A_addressprefixes
+  rg_name                = module.resource_group.rg_name
+  vnet_name              = module.virtual_network.vnet_name
+}
+
+module "virtual_machine_A" {
+  source     = "github.com/D3jag0re/tf-modules-azure//virtualMachineLinux"
+  vm_name    = "vm-linux-A"
+  rg_name    = module.resource_group.rg_name
+  nic_subnet = module.subnet.subnet_id
+}
