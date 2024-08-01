@@ -14,6 +14,8 @@ module "virtual_network" {
   vnet_location        = local.location
   rg_name              = module.resource_group.rg_name
   vnet_addressprefixes = local.vnet_addressprefixes
+  custom_dns           = false
+  depends_on           = [module.resource_group]
 }
 
 module "subnet" {
@@ -22,6 +24,7 @@ module "subnet" {
   subnet_addressprefixes = local.subnet_A_addressprefixes
   rg_name                = module.resource_group.rg_name
   vnet_name              = module.virtual_network.vnet_name
+  depends_on             = [module.virtual_network]
 }
 
 module "virtual_machine_A" {
@@ -29,4 +32,5 @@ module "virtual_machine_A" {
   vm_name    = "vm-linux-A"
   rg_name    = module.resource_group.rg_name
   nic_subnet = module.subnet.subnet_id
+  depends_on = [module.subnet]
 }

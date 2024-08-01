@@ -8,7 +8,7 @@ terraform {
   backend "azurerm" {
     resource_group_name  = "tfstate-rg"
     storage_account_name = "tfstatecacestorage"
-    container_name       = "tfstateM"
+    container_name       = "tfstate"
     key                  = "movie.terraform.tfstate"
   }
 }
